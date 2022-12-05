@@ -1,0 +1,137 @@
+<!-- Start Table -->
+<!-- Here pure-table class is used -->
+{% load static %}
+<div class="container">
+    <div class="bg-image h-100" style="background-color: #f5f7fa;">
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
+                                     style="position: relative; width: 700px height: 400px">
+
+
+                                    <input class="form-control" id="myInput" type="text"
+                                           placeholder="Search contracts repository..">
+                                    <table class="table table-striped mb-0">
+                                        <thead style="background-color: #000000;">
+                                        <tr>
+
+                                            <th scope="col">Contract No.</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Effective Date</th>
+                                            <th scope="col">Expiration Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+
+
+                                        </tr>
+                                        </thead>
+                                        <tbody id="myTable">
+                                        {% for my_contract in my_contracts %}
+                                            <tr class="accordion-toggle" data-toggle="collapse"
+                                                data-target="#{{ my_contract.contract_number }}" }>
+                                                <td>{{ my_contract.contract_number }}</td>
+                                                <td>{{ my_contract.title }}</td>
+                                                <td> {{ my_contract.effective_date |date:'m-d-Y' }} </td>
+                                                <td> {{ my_contract.expiration_date |date:'m-d-Y' }} </td>
+                                                <td>{{ my_contract.contract_status }}</td>
+
+
+                                                <td>
+
+                                                    {% comment %} <a  href="{% url 'contracts:reports' my_contract.id %}">
+                                                          {% load static %}
+                                                         <img src="{% static '/white.png' %}">
+                                                        </a>{% endcomment %}
+                                                    {% comment %}<a class="btn btn-info"
+                                                       href="{% url 'contracts:reports' my_contract.id %}"
+                                                       target="_new">Report</a>
+{% endcomment %}
+                                                    <a href="{% url 'contracts:reports' my_contract.id %}"target="_new">
+                                                        <img  width="25" height="25" src="{% static 'images/fileattached.png' %}" alt="Report">
+                                                    </a>
+
+                                                </td>
+                                                {% comment %}<td><a class="btn btn-info"
+                                                       href="{% url 'contracts:detail_contract' my_contract.id %}">Details</a>
+                                                </td>{% endcomment %}
+                                                <td><a href="{% url 'contracts:detail_contract' my_contract.id %}">
+                                                    <img width="25" height="25" src="{% static 'images/details.png' %}" alt="Details">
+                                                </a></td>
+                                               {% comment %} <td><a class="btn btn-info"
+                                                       href="{% url 'contracts:edit_contract' my_contract.id %}">Edit</a>
+                                                </td>{% endcomment %}
+                                                <td><a href="{% url 'contracts:edit_contract' my_contract.id %}">
+                                                    <img src="{% static 'images/edit.png' %}" alt="Edit">
+                                                </a></td>
+                                                {% comment %}<td><a class="btn btn-info"
+                                                       href="{% url 'contracts:delete_contract' my_contract.id %}">Delete</a>
+                                                </td>{% endcomment %}
+                                             <td><a href="{% url 'contracts:delete_contract' my_contract.id %}">
+                                                    <img src="{% static 'images/delete.png' %}" alt="Delete">
+                                                </a></td>
+
+
+
+                                            </tr>
+
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+
+
+    .intro {
+        height: 100%;
+    }
+
+    table td,
+    table th {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    thead th {
+        color: #fff;
+    }
+
+    .card {
+        border-radius: .5rem;
+    }
+
+    .table-scroll {
+        border-radius: .5rem;
+    }
+
+    .table-scroll table thead th {
+        font-size: 1.25rem;
+    }
+
+    thead {
+        top: 0;
+        position: sticky;
+    }
+</style>
+
+
+<!-- End Table -->

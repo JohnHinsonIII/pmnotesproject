@@ -1,0 +1,50 @@
+{% extends "contracts/base.html" %}
+
+{% block content %}
+
+
+    <!-- Begin Table -->
+    <div class="container py-4">
+        <div class="container text-center p-3 " style="width:6000px;">
+            <h1 class="text-dark">Contracts Explorer</h1>
+        </div>
+
+       {% comment %} <div class="container text-center">
+            <a class="btn btn-info" href="{% url 'contracts:new_contract' %}">New Contract</a>
+        </div>{% endcomment %}
+
+
+    </div>
+
+    <style>
+        .container {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: black;
+        }
+    </style>
+
+
+
+
+    {% include 'contracts/includes/my_contracts_explorer_table.html' %}
+
+   {% comment %} <br>
+    <div class="container text-center">
+        <a class="btn btn-info" href="{% url 'contracts:new_contract' %}">New Contract</a>
+    </div>
+    </div>{% endcomment %}
+
+
+    </div>
+    <!-- End Table -->
+
+
+
+{% endblock content %}

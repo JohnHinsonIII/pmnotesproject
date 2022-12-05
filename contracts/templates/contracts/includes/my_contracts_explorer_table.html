@@ -1,0 +1,188 @@
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/print/bootstrap-table-print.min.js"></script>
+{% load static %}
+<div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
+                                 style="position: relative; width: 700px height: 400px">
+
+
+                                <table
+                                        id="table"
+                                        data-toggle="table"
+                                        s d data-height="500"
+                                        data-show-export="true"
+                                        data-show-toggle="true"
+                                        data-show-search-clear-button="true"
+                                        data-search="true"
+                                        data-advanced-search="true"
+                                        data-id-table="advancedTable"
+                                        data-show-columns="true"
+                                        data-show-multi-sort="true"
+                                        data-search-highlight="true"
+                                        data-show-pagination-switch="true"
+                                        data-multiple-select-row="false"
+                                        data-click-to-select="false"
+                                        data-pagination="true"
+                                        data-filter-control="true"
+                                        data-show-print="true"
+                                        data-sort-priority='[{"sortName": "contract_number","sortOrder":"desc"},{"sortName":"contract.title","sortOrder":"desc"}]'>
+                                    <thead>
+                                    <tr>
+                                        {#                                        <th data-field="state" data-checkbox="true"></th>#}
+                                        <th data-field="contract_number" data-sortable="true"
+                                            data-detail-formatter="contractNumberFormatter">Contract
+                                            Number
+                                        </th>
+                                        <th data-field="title" data-sortable="true"
+                                            data-detail-formatter="titleFormatter">Title
+                                        </th>
+                                        <th data-field="effective_date" data-sortable="true"
+                                            data-detail-formatter="effectiveDateFormatter">Effective
+                                            Date
+                                        </th>
+                                        <th data-field="expiration_date" data-sortable="true"
+                                            data-detail-formatter="expirationDateFormatter">Expiration
+                                            Date
+                                        </th>
+                                        <th data-field="contract_status" data-sortable="true"
+                                            data-detail-formatter="statusFormatter">Status
+                                        </th>
+
+                                        <th data-field="contract_type" data-sortable="true"
+                                            data-detail-formatter="contractTypeFormatter">Type
+                                        </th>
+                                        <th data-field="funded" data-sortable="true"
+                                            data-detail-formatter="fundedFormatter">Funded
+                                        </th>
+                                       {% comment %} <th  data-sortable="false"></th>
+                                        <th  data-sortable="false"></th>
+                                        <th  data-sortable="false"></th>
+                                        <th  data-sortable="false"></th>{% endcomment %}
+
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody id="table">
+                                    {% for my_contracts_explorer in my_contracts_explorers %}
+                                        <tr>
+
+
+                                            <td>{{ my_contracts_explorer.contract_number }}</td>
+                                            <td>{{ my_contracts_explorer.title }}</td>
+                                            <td> {{ my_contracts_explorer.effective_date |date:'m-d-Y' }} </td>
+                                            <td> {{ my_contracts_explorer.effective_date |date:'m-d-Y' }} </td>
+                                            <td> {{ my_contracts_explorer.contract_status }} </td>
+                                            <td> {{ my_contracts_explorer.contract_type }} </td>
+                                            <td>${{ my_contracts_explorer.funded }} </td>
+
+                                         {% comment %}   <td>
+                                                <a href="{% url 'contracts:reports' my_contracts_explorer.id %}" target="_new">
+                                                    <img width="25" height="25"
+                                                         src="{% static 'images/fileattached.png' %}" alt="Report">
+                                                </a>
+
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'contracts:detail_contract' my_contracts_explorer.id %}">
+                                                    <img width="25" height="25" src="{% static 'images/details.png' %}"
+                                                         alt="Details">
+                                                </a>
+                                            </td>
+                                            <td><a href="{% url 'contracts:edit_contract' my_contracts_explorer.id %}">
+                                                <img src="{% static 'images/edit.png' %}" alt="Edit">
+                                            </a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{% url 'contracts:delete_contract' my_contracts_explorer.id %}">
+                                                    <img src="{% static 'images/delete.png' %}" alt="Delete">
+                                                </a>
+                                            </td>
+{% endcomment %}
+                                            {% comment %}     <td>
+
+                                                       <a class="btn btn-info"
+                                                       href="{% url 'contracts:reports' my_contract.id %}" target="_new">Report</a>
+                                                </td>
+                                                <td><a class="btn btn-info"
+                                                       href="{% url 'contracts:detail_contract' my_contract.id %}">Details</a>
+                                                </td>
+                                                <td><a class="btn btn-info"
+                                                       href="{% url 'contracts:edit_contract' my_contract.id %}">Edit</a>
+                                                </td>
+                                                <td><a class="btn btn-info"
+                                                       href="{% url 'contracts:delete_contract' my_contract.id %}">Delete</a>
+                                                </td>
+{% endcomment %}
+
+
+                                        </tr>
+
+                                    {% endfor %}
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function contractNumberFormatter(index, row) {
+        return index + '. Selected: Contract Number: ' + row.contract_number
+    }
+
+    function titleFormatter(index, row) {
+        return index + '. Selected: Title: ' + row.title
+    }
+
+    function effectiveDateFormatter(index, row) {
+        return index + '. Selected: Effective Date: ' + row.effective_date
+    }
+
+
+    function expirationDateFormatter(index, row) {
+        return index + '. Selected: Expiration Date: ' + row.expiration_date
+    }
+
+    function contractStatusFormatter(index, row) {
+        return index + '. Selected: Status: ' + row.contract_status
+    }
+
+    function contractTypeFormatter(index, row) {
+        return index + '. Selected: Type: ' + row.contract_type
+    }
+
+    function fundedFormatter(index, row) {
+        return index + '. Selected: Type: ' + row.funded
+    }
+</script>
+
+<script>
+    $(function () {
+        $('#table').bootstrapTable()
+    })
+</script>
+

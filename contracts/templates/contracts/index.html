@@ -1,0 +1,49 @@
+{% extends "contracts/base.html" %}
+
+{% block content %}
+
+    <main>
+        <!-- Begin Chart -->
+        {% if user.is_superuser %}
+            {% include 'contracts/includes/charts.html' %}
+        {% endif %}
+        <!-- End Chart -->
+
+        <!-- Begin Table -->
+
+        <!-- End Table -->
+        <div class="container py-4">
+
+            <div class="p-5 mb-4 bg-info rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">PMNotes CRM</h1>
+                    <p class="col-md-8 fs-4">Find the latest contracts, amendments, attachments, and more.</p>
+                    <button class="btn btn-dark btn-lg" type="button"><a class="text-light"
+                                                                         href="{% url 'contracts:all_contracts' %}">Explore </a>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row align-items-md-stretch">
+                <div class="col-md-6">
+                    <div class="h-100 p-5 text-white bg-dark rounded-3">
+                        <h2>Manage and Store Contracts</h2>
+                        <p>Find contracts easily, attach documents, find information, get organized, done.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="h-100 p-5 text-white bg-dark border rounded-3">
+                        <h2>Unlimited Contracts</h2>
+                        <p>Create an account and start managing immediately. No limits! No fees!</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="pt-3 mt-4 text-muted border-top">
+                © PMNotes 2022
+            </footer>
+
+        </div>
+    </main>
+
+{% endblock content %}

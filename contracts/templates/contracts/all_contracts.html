@@ -1,0 +1,256 @@
+{% extends "contracts/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+      .box {
+        width: 180px;
+        height: 180px;
+        background: #d9dbda;
+        margin: 20px 50px;
+      }
+      .inner-border {
+        border: 20px solid #d9dbda;
+        box-shadow: inset 0px 0px 0px 10px #969696;
+        box-sizing: border-box;
+      }
+      .inner-outline {
+        outline: 10px solid lightblue;
+        outline-offset: -30px;
+      }
+    </style>
+    <div class="container text-center p-3 " style="width:6000px;">
+        <h1 class="text-dark">All Contracts</h1>
+
+
+        <div class="form-group">
+            <div class="card card-body bg-light text-dark rounded" style="width:100%;">
+                <form method="get">
+                    <div class="row ">
+                        <div class="col-md-3">
+                            {{ my_Filter.form.contract_status|as_crispy_field }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ my_Filter.form.contract_type|as_crispy_field }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ my_Filter.form.tag_type|as_crispy_field }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ my_Filter.form.contract_number|as_crispy_field }}
+                        </div>
+                        <div class="col-md-3 p-2">
+                            <button class="btn btn-info border-dark mt-4  type="submit">Search</button>
+                        </div>
+
+
+                        <h4 class="text-dark">Total Found Contracts: {{ all_contracts.count }}</h4>
+
+
+                        </div>
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Begin Row -->
+     <div class="container text-center p-3 ">
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+            {% for contract in all_contracts %}
+                <div v-for="contract in all_contracts" class="col">
+                <div class="container text-center p-3 ">
+                       {% if contract.main_logo %}
+                                <p class="card-text">
+                                <img class="card-img-right img-thumbnail" src="{{ contract.main_logo.url }}" width=375px
+                                     height=75px
+                                     style="max-height:200px" alt="connect">
+                            {% endif %}
+                    <div class="d-flex align-items-center justify-content-between mt-5">
+                        <div class="container text-center p-3 ">
+
+                            <div class="project-block bg-lightyellow">
+                                <i class="icofont-ui-touch-phone"></i>
+
+                            </div>
+                            <span class="small text-muted project_name fw-bold">  <a href="{% url 'contracts:detail_contract' contract.id %}">
+
+                                <h6 class="card-title fw-bold">{{ contract.contract_number }}</h6>
+                            </a> </span>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+{#                        <h4 class="small fw-bold mb-0">Progress</h4>#}
+                        {% if contract.date_diff > 1 %}
+                            <b><span style="color:red;"><i class="icofont-ui-clock"></i>
+                                {{ contract.date_diff }} Days Past Renewal
+                            </span></b>
+                        {% else %}
+                              <b> <span style="color:green;"><i class="icofont-ui-clock"></i>
+                                {{ contract.date_diff }} Days Left To Renew
+                             </span></b>
+                        {% endif %}
+                    </div>
+
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                             {% if user.is_authenticated %}
+                                 <a class="btn btn-info align-center" aria-setsize="5"
+                                       href="{% url 'contracts:edit_contract' contract.id %}">Edit
+                                    </a>
+                             <a class="btn btn-info align-center"
+                                   href="{% url 'contracts:detail_contract' contract.id %}">View
+                                    </a>
+                             {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row g-2 pt-4">
+                        <div class="col-6">
+
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-paper-clip"></i>
+                                <span class="ms-2"><strong>Type: </strong>{{ contract.contract_type }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-sand-clock"></i>
+                                <span class="ms-2"><strong>Status: </strong>{{ contract.contract_status }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-group-students "></i>
+                                <span class="ms-2"><strong>Funded:</strong> ${{ contract.funded |floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-ui-text-chat"></i>
+                                <span class="ms-2"><strong>Current:</strong> ${{ contract.current_funding |floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-group-students "></i>
+                                <span class="ms-2"><strong>Total:</strong> ${{ contract.total_funding |floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-ui-text-chat"></i>
+                                <span class="ms-2"><strong>Renewal:</strong> {{ contract.renewal_date|date:'m-d-Y' }}</span>
+                            </div>
+                        </div>
+                         <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-group-students "></i>
+                                <span class="ms-2"><strong>Effective:</strong> {{ contract.effective_date|date:'m-d-Y' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <i class="icofont-ui-text-chat"></i>
+                                <span class="ms-2"><strong>Expiration:</strong> {{ contract.expiration_date|date:'m-d-Y' }} </span>
+                            </div>
+                        </div>
+
+
+                                <i class="icofont-group-students "></i>
+                                <span style="color:blue;">&nbsp;</span>
+                         <i class="icofont-ui-text-chat"></i>
+                                <span class="ms-2"><strong>Title: </strong>{{ contract.title }}</span>
+                        <span class="small text-muted project_name fw-bold"><a href="/send">Send Email  </a></span>
+
+
+                    </div>
+                    <div class="dividers-block"></div>
+
+
+{#                        <h4 class="small fw-bold mb-0">Progress</h4>#}
+                      {% comment %}  {% if contract.date_diff > 1 %}
+                            <b><span style="color:red;"><i class="icofont-ui-clock"></i>
+                                {{ contract.date_diff }} Days Past Renewal
+                            </span></b>
+                        {% else %}
+                              <b> <span style="color:green;"><i class="icofont-ui-clock"></i>
+                                {{ contract.date_diff }} Days Left To Renew
+                             </span></b>
+                        {% endif %}{% endcomment %}
+
+                   {% comment %} <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%" aria-valuenow="15"
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 25%"
+                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 28%"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>{% endcomment %}
+                </div>
+            </div>
+               {% endfor %}
+        </div>
+    </div>
+    <!-- End Row -->
+{% comment %}
+
+
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+            {% for contract in all_contracts %}
+                <div v-for="movie in movies" class="col">
+                    <div class="card">
+                        {% if detail_contract.main_logo %}
+                            <img class="card-img-top" src="{{ contract.main_logo.url }}"/>
+                        {% endif %}
+
+
+
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Contract Number:</h5>
+                            <a href="{% url 'contracts:detail_contract' contract.id %}">
+
+                                <h5 class="card-title fw-bold">{{ contract.contract_number }}</h5>
+                            </a>
+
+
+
+                            {% if contract.main_logo %}
+                                <p class="card-text">
+                                <img class="card-img-right img-thumbnail" src="{{ contract.main_logo.url }}" width=300px
+                                     height=200px
+                                     style="max-height:200px" alt="connect">
+                            {% endif %}
+
+
+
+                            <p class="card-text"><b>Title: </b> {{ contract.title }}</p>
+                            <p class="card-text"><b>Contract Type: </b> {{ contract.contract_type }}</p>
+                            <p class="card-text"><b>Contract Status: </b> {{ contract.contract_status }}</p>
+                            <p class="card-text"><b>Funded: </b> {{ contract.funded }}</p>
+                            <p class="card-text"><b>State: </b> {{ contract.state }}</p>
+                            <p class="card-text"><b>Renewal Date: </b> {{ contract.renewal_date }}</p>
+                            <hr>
+                            <ul>
+                                <a class="btn btn-info align-center"
+                                   href="{% url 'contracts:detail_contract' contract.id %}">View
+                                    Contract</a>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>{% endcomment %}
+
+
+
+{% endblock content %}

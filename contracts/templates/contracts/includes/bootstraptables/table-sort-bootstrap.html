@@ -1,0 +1,87 @@
+<link href="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.0/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+
+<table
+        id="table"
+        data-toggle="table"
+        data-search="true"
+        data-detail-view="true"
+        data-detail-view-by-click="true"
+        data-detail-view-icon="false"
+        data-show-columns="true"
+        data-show-multi-sort="true"
+        data-sort-priority='[{"sortName": "contract_number","sortOrder":"desc"},{"sortName":"contract.title","sortOrder":"desc"}]'>
+    <thead>
+    <tr>
+        <th data-field="contract_number" data-sortable="true" data-detail-formatter="contractNumberFormatter">Contract
+            Number
+        </th>
+        <th data-field="title" data-sortable="true" data-detail-formatter="titleFormatter">Title</th>
+        <th data-field="effective_date" data-sortable="true" data-detail-formatter="effectiveDateFormatter">Effective
+            Date
+        </th>
+        <th data-field="expiration_date" data-sortable="true" data-detail-formatter="expirationDateFormatter">Expiration
+            Date
+        </th>
+        <th data-field="contract_status" data-sortable="true" data-detail-formatter="statusFormatter">Status</th>
+
+        <th data-field="contract_type" data-sortable="true" data-detail-formatter="contractTypeFormatter">Type</th>
+
+
+    </tr>
+    </thead>
+
+    <tbody id="table">
+    {% for my_contract in my_contracts %}
+        <tr>
+            <td>{{ my_contract.contract_number }}</td>
+            <td>{{ my_contract.title }}</td>
+            <td> {{ my_contract.effective_date |date:'m-d-Y' }} </td>
+            <td> {{ my_contract.effective_date |date:'m-d-Y' }} </td>
+            <td> {{ my_contract.contract_status }} </td>
+            <td> {{ my_contract.contract_type }} </td>
+
+
+        </tr>
+
+    {% endfor %}
+
+
+    </tbody>
+</table>
+
+
+<script>
+    function contractNumberFormatter(index, row) {
+        return index + '. Selected: Contract Number: ' + row.contract_number
+    }
+
+    function titleFormatter(index, row) {
+        return index + '. Selected: Title: ' + row.title
+    }
+
+    function effectiveDateFormatter(index, row) {
+        return index + '. Selected: Effective Date: ' + row.effective_date
+    }
+
+
+    function expirationDateFormatter(index, row) {
+        return index + '. Selected: Expiration Date: ' + row.expiration_date
+    }
+
+    function contractStatusFormatter(index, row) {
+        return index + '. Selected: Status: ' + row.contract_status
+    }
+
+      function contractTypeFormatter(index, row) {
+        return index + '. Selected: Type: ' + row.contract_type
+    }
+</script>
+
+<script>
+    $(function () {
+        $('#table').bootstrapTable()
+    })
+</script>

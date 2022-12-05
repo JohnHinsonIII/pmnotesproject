@@ -1,0 +1,49 @@
+
+        <!-- Here pure-table class is used -->
+        <table class="pure-table">
+            <thead>
+            <tr>
+                <th>Contract No.</th>
+                <th>Title</th>
+                <th>Effective Date</th>
+                <th>Expiration Date</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+            </thead>
+
+            <tbody id="myTable">
+            {% for my_contract in my_contracts %}
+                <tr class="accordion-toggle" data-toggle="collapse" data-target="#{{ my_contract.contract_number }}" }>
+                    <td>{{ my_contract.contract_number }}</td>
+                    <td>{{ my_contract.title }}</td>
+                    <td> {{ my_contract.effective_date |date:'m-d-Y' }} </td>
+                    <td> {{ my_contract.expiration_date |date:'m-d-Y' }} </td>
+                    <td>{{ my_contract.contract_status }}</td>
+
+
+
+                <td><a class="btn btn-info" href="{% url 'contracts:reports' my_contract.id %}" target="_new">Report</a>
+                </td>
+                <td><a class="btn btn-info" href="{% url 'contracts:detail_contract' my_contract.id %}">Details</a>
+                </td>
+                <td><a class="btn btn-info" href="{% url 'contracts:edit_contract' my_contract.id %}">Edit</a></td>
+                <td><a class="btn btn-info" href="{% url 'contracts:delete_contract' my_contract.id %}">Delete</a>
+                </td>
+
+
+                </tr>
+
+
+
+
+        </tr>
+            {% endfor %}
+
+
+    </tbody>
+    </table>
